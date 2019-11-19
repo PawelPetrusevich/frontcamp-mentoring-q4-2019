@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link  rel="stylesheet" href="./main.css">
+</head>
+<body>
+    <div class="nav-header">  
+        <a class="go-home-link" href="index.html">Go Home</a>
+    </div>
+    <div class="nav-header">
+        <label class="label-filter">Category:</label>
+        <select id="categoryList">
+            <option value="">All</option>
+            <option value="business">Business</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="general">General</option>
+            <option value="health">Health</option>
+            <option value="science">Science</option>
+            <option value="sports">Sports</option>
+            <option value="technology">Technology</option>
+        </select>
+
+        <label class="label-filter">Language:</label>
+
+        <select id="languageList">
+            <option value="">All</option>
+            <option value="en">English</option>
+            <option value="ru">Russian</option>
+            <option value="fr">French</option>
+        </select>
+        <button id="searchSubmit">Update Source List</button>
+    </div>
+
+    <div id="news-category">
+        <h4>Source List</h4>  
+        <ul id="newsSourceList">
+
+        </ul>      
+    </div>
+    <div id="news-content">
+
+    </div>
+
+    
+    <script src="./bundle.js"></script>
+</body>
+</html>
