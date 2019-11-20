@@ -18,10 +18,37 @@
     margin: 10px 10px 10px 25%;
 }
 
+#newsList {
+    margin: 10px;
+}
+
 .go-home-link {
     margin: 10px;
 }
 
 .label-filter {
     margin: 10px;
+}
+
+.section-header {
+    text-align: center;    
+}
+
+.source-item {
+    margin: 5px 0;
+    color: cornflowerblue;
+}
+
+.source-item:hover {
+    cursor: pointer;
+    color: crimson;
+}
+
+.news-item {
+    border: 1px solid black;
+    margin: 5px;
+}
+
+.news-item > h4,p,a{
+    padding: 5px;
 }

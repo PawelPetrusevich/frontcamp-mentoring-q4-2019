@@ -1,19 +1,18 @@
 .nav-header {
-    background: red;
+    border: 1px solid black;
     margin: 10px;
     padding: 5px;
 }
 
 #news-category {
-    background: blue;
     width: 20%;
     float: left;
     min-height: 50%;
     margin: 0px 10px;
+    border: 1px solid black;
 }
 
 #news-content {
-    background: green;
     min-height: 70%;
     border: 1px solid black;
     margin: 10px 10px 10px 25%;

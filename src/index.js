@@ -48,6 +48,7 @@ function displaySources(sources){
 
     sources.forEach(element => {
         var li = document.createElement('li');
+        li.className = 'source-item';
         li.innerHTML = element.name;
         li.dataset.value = element.id;
         li.onclick = searchNewsBySource;
@@ -75,8 +76,8 @@ function displayNews(newsList){
 
     newsList.forEach(element => {
         var newsDiv = document.createElement('div');
-        newsDiv.classList.add = 'news-item';
-        var newsItemHeader = document.createElement('h5');
+        newsDiv.className = 'news-item';
+        var newsItemHeader = document.createElement('h4');
         var newsItemBody = document.createElement('p');
         var newsItemLink = document.createElement('a');
 
@@ -84,7 +85,7 @@ function displayNews(newsList){
         newsItemBody.innerHTML = element.content;
         newsItemLink.href = element.url;
         newsItemLink.innerHTML = 'Read full...';
-        newsItemLink.setAttribute('target','_blank'); 
+        newsItemLink.setAttribute('target','_blank');
 
         newsDiv.append(newsItemHeader,newsItemBody,newsItemLink);
         newNewsList.append(newsDiv);
