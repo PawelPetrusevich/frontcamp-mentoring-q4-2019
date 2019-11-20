@@ -1,5 +1,5 @@
 .nav-header {
-    background: red;
+    border: 1px solid black;
     margin: 10px;
     padding: 5px;
 }
@@ -13,7 +13,6 @@
 }
 
 #news-content {
-    background: green;
     min-height: 70%;
     border: 1px solid black;
     margin: 10px 10px 10px 25%;

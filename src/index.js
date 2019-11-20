@@ -50,13 +50,45 @@ function displaySources(sources){
         var li = document.createElement('li');
         li.innerHTML = element.name;
         li.dataset.value = element.id;
-        li.onclick = loadNewsBySource;
+        li.onclick = searchNewsBySource;
         newUl.append(li);
     });
 
     oldUl.replaceWith(newUl);
 }
 
-function loadNewsBySource(event){
+function searchNewsBySource(event){
     var sourceId = event.currentTarget.dataset.value;
+    var urlBuilder = new UriBuilder(newsBaseUri,newsRelativeUri);
+    urlBuilder.addParameter("sources",sourceId);
+    urlBuilder.addParameter("apiKey",apiKey);
+    var url = urlBuilder.build();
+
+    fetchAsync(url)
+        .then(data => displayNews(data.articles));
+}
+
+function displayNews(newsList){
+    var oldNewsList = document.getElementById("newsList");
+    var newNewsList = document.createElement('div');
+    newNewsList.id = 'newsList';
+
+    newsList.forEach(element => {
+        var newsDiv = document.createElement('div');
+        newsDiv.classList.add = 'news-item';
+        var newsItemHeader = document.createElement('h5');
+        var newsItemBody = document.createElement('p');
+        var newsItemLink = document.createElement('a');
+
+        newsItemHeader.innerHTML = element.title;
+        newsItemBody.innerHTML = element.content;
+        newsItemLink.href = element.url;
+        newsItemLink.innerHTML = 'Read full...';
+        newsItemLink.setAttribute('target','_blank'); 
+
+        newsDiv.append(newsItemHeader,newsItemBody,newsItemLink);
+        newNewsList.append(newsDiv);
+    })
+
+    oldNewsList.replaceWith(newNewsList);
 }

@@ -23,6 +23,6 @@ export default class UriBuilder {
             url = url + `${element.name}=${element.value}&`
         });
 
-        return url;
+        return url.slice(0, -1);
     }
 }
