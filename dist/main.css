@@ -1,0 +1,27 @@
+.nav-header {
+    border: 1px solid black;
+    margin: 10px;
+    padding: 5px;
+}
+
+#news-category {
+    width: 20%;
+    float: left;
+    min-height: 50%;
+    margin: 0px 10px;
+    border: 1px solid black;
+}
+
+#news-content {
+    min-height: 70%;
+    border: 1px solid black;
+    margin: 10px 10px 10px 25%;
+}
+
+.go-home-link {
+    margin: 10px;
+}
+
+.label-filter {
+    margin: 10px;
+}
