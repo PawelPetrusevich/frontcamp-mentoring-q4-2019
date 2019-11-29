@@ -5,6 +5,11 @@ module.exports = {
       './src/index.js',
       './src/selectExtension.js',
       './src/uriBuilder.js',
+      './src/ApiFactory.js',
+      './src/GetNewsRequest.js',
+      '//src/PostNewsRequest.js',
+      './src/ErrorHandler.js',
+      '/src/ErrorHandlerPopUp.js',
       './styles.css'
     ],
     module: {

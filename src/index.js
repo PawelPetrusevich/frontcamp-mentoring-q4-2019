@@ -1,5 +1,8 @@
 import  getSelectedItem  from './selectExtension.js';
 import  UriBuilder  from './uriBuilder.js';
+import SubscribeOnError from './ErrorHandler.js';
+import  ApiFactory  from "./repository/ApiFactory.js";
+import NewsController from './controllers/newsController.js'
 
 const languageDropDownName = "languageList";
 const categoryDropDownName = "categoryList";
@@ -9,18 +12,14 @@ const sourceRelativeUri = '/sources?';
 const newsBaseUri = 'https://newsapi.org/v2';
 const newsRelativeUri = '/top-headlines?';
 
+window.addEventListener('error', err => {
+    var params = {
+        time : 1000
+    };
+    SubscribeOnError(err,params);
+})
+
 document.getElementById('searchSubmit').onclick = searchSources;
-
-async function fetchAsync(url) {
-    let response = await fetch(url)
-
-    if(!response.ok){
-        throw new Error("Some error");
-    }
-
-    let data = await response.json();
-    return data;
-}
 
 function searchSources(){
     let language = getSelectedItem(languageDropDownName);
@@ -37,8 +36,14 @@ function searchSources(){
 
     var url = uriBuilder.build();
 
-    fetchAsync(url)
-        .then(data=> displaySources(data.sources));
+    var apiFactory = new ApiFactory();
+    var request = apiFactory.create('GET',url)
+
+    request.fetchAsync()
+        .then(data=> displaySources(data.sources))
+        .catch(function(err){
+            setTimeout(function() { throw err; });
+        });
 }
 
 function displaySources(sources){
@@ -65,7 +70,10 @@ function searchNewsBySource(event){
     urlBuilder.addParameter("apiKey",apiKey);
     var url = urlBuilder.build();
 
-    fetchAsync(url)
+    var apiFactory = new ApiFactory();
+    var request = apiFactory.create('GET',url)
+
+    request.fetchAsync()
         .then(data => displayNews(data.articles));
 }
 
