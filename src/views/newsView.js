@@ -9,7 +9,6 @@ export default class NewsView {
             li.className = 'source-item';
             li.innerHTML = element.name;
             li.dataset.value = element.id;
-            li.onclick = newsService.searchNewsBySource;
             newUl.append(li);
         });
 

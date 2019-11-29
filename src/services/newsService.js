@@ -1,5 +1,6 @@
 import  UriBuilder  from '../uriBuilder.js';
 import  ApiFactory  from "../repository/ApiFactory.js";
+import  getSelectedItem  from '../selectExtension.js';
 
 const languageDropDownName = "languageList";
 const categoryDropDownName = "categoryList";
@@ -42,7 +43,6 @@ export default class NewsService {
         var apiFactory = new ApiFactory();
         var request = apiFactory.create('GET',url)
     
-        request.fetchAsync()
-            .then(data => displayNews(data.articles));
+        return request;
     }
 }
