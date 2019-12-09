@@ -1,0 +1,9 @@
+> db.restaurants.find({ borough: "Queens", cuisine:"Chinese" }).count()
+728
+
+<----------->
+
+> db.restaurants.find({},{"_id":1}).sort({"grade.score":-1}).limit(1)
+{ "_id" : ObjectId("5dee7194531e0f3ed997fcbe") }
+
+<------------>

@@ -8,28 +8,38 @@ export default class NewsController{
         document.getElementById('searchSubmit').onclick = this.getSearchSources.bind(this);
     } 
 
-    getSearchSources(){
-        this.newsService.searchSources().fetchAsync()
-            .then(data => this.newsView.renderNewsSource(data.sources))
-            .then(()=> {
-                var sourceLinks = document.getElementsByClassName('source-item');
+    async getSearchSources(){
 
-                Array.prototype.forEach.call(sourceLinks, element => {
-                    element.onclick = this.getNewsBySource.bind(this);
-                });
-            })
-            .catch(function(err){
-                setTimeout(function() { throw err; });
-            });
-         
+        try {
+            var data = await this.newsService.searchSources().fetchAsync();
+
+            this.newsView.renderNewsSource(data.sources);
+
+             var sourceLinks = document.getElementsByClassName('source-item');
+
+            Array.prototype.forEach.call(sourceLinks, element => {
+                element.onclick = this.getNewsBySource.bind(this);
+            }); 
+        } catch (error) {
+            let SubscribeOnError = await import('../ErrorHandler.js');
+            var params = {
+                time : 1000
+            };
+            SubscribeOnError.default(error,params);
+        }                
     }
 
-    getNewsBySource(event){
-        this.newsService.searchNewsBySource(event).fetchAsync()
-            .then(data=>this.newsView.renderNewsList(data.articles))
-            .catch(function(err){
-                setTimeout(function() { throw err; });
-            });
-    }
-    
+    async getNewsBySource(event){
+
+        try {
+            var data = await this.newsService.searchNewsBySource(event).fetchAsync();
+            this.newsView.renderNewsList(data.articles);
+        } catch (error) {
+            let SubscribeOnError = await import('../ErrorHandler.js');
+            var params = {
+                time : 1000
+            };
+            SubscribeOnError.default(error,params);
+        }        
+    }    
 }

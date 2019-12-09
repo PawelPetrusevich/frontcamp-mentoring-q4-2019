@@ -13,7 +13,7 @@ export default class ErrorHandlerPopUp {
     open = function(err,params) {
         var modal = document.getElementById("errorModal");
         var errorMessageContainer = document.getElementById("errorMessage");
-        errorMessageContainer.innerHTML = err.error.message;
+        errorMessageContainer.innerHTML = err.message;
         initializePopUp(params);
         modal.style.display = "block";
     }

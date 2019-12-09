@@ -1,17 +1,19 @@
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const path = require('path');
+
 module.exports = {
-    entry: [
-      "@babel/polyfill",
-      './src/index.js',
-      './src/selectExtension.js',
-      './src/uriBuilder.js',
-      './src/ApiFactory.js',
-      './src/GetNewsRequest.js',
-      '//src/PostNewsRequest.js',
-      './src/ErrorHandler.js',
-      '/src/ErrorHandlerPopUp.js',
-      './styles.css'
-    ],
+    entry: {
+      index : [
+        "@babel/polyfill",
+        './src/index.js',
+        './src/selectExtension.js',
+        './src/uriBuilder.js',
+        './src/repository/ApiFactory.js',
+        './src/repository/GetNewsRequest.js',
+        './src/repository/PostNewsRequest.js',
+        './styles.css'
+      ]
+    },
     module: {
         rules: [
           {
@@ -37,7 +39,8 @@ module.exports = {
     output: {
       path: __dirname + '/dist',
       publicPath: '/',
-      filename: 'bundle.js'
+      filename: '[name].bundle.js',
+      chunkFilename: '[name].bundle.js'
     },
     devServer: {
       contentBase: './dist'
