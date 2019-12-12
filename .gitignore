@@ -1,2 +1,5 @@
 node_modules
 MongoDb/restaurants.json
+MongoDb/airlines.csv
+MongoDb/messages.bson
+MongoDb/messages.metadata.json
