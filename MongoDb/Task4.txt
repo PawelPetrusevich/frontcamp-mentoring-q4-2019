@@ -68,6 +68,32 @@ db.airlines.aggregate([
 { "_id" : "Norwegian Air Shuttle ASA", "total" : 13344 }
 { "_id" : "VistaJet Limited", "total" : 183 }
 
+<--------------------------------->
+3. Which carriers provide flights to Latvia (destCountry)? Show result as one document {
+"_id" : "Latvia", "carriers" : [ "carrier1", " carrier2", …] }
+
+db.airlines.aggregate([
+...     {
+...         $match: {
+...             destCountry: "Latvia"
+...         }
+...     },
+...     {
+...         $group: {
+...             _id: "$destCountry",
+...             carriers: {
+...                 $addToSet: "$carrier"
+...             }
+...         }
+...     }
+... ])
+{ "_id" : "Latvia", "carriers" : [ "Uzbekistan Airways", "Blue Jet SP Z o o", "JetClub AG" ] }
+
+
+<--------------------------------->
+4. What are the carriers which flue the most number of passengers from the United State to either
+Greece, Italy or Spain? Find top 10 carriers, but provide the last 7 carriers (do not include the
+first 3). Show result as { "_id" : "<carrier>", "total" : 999}
 
 <--------------------------------->
 5. Find the city (originCity) with the highest sum of passengers for each state (originState)
@@ -75,6 +101,47 @@ of the United States (originCountry). Provide the city for the first 5 states or
 alphabetically (you should see the city for Alaska, Arizona and etc). Show result as {
 "passengersCount" : 999, "location" : { "state" : "abc", "city" : "xyz"
 } }
+
+ db.airlines.aggregate([
+...     {
+...         $match: {
+...             originCountry: "United States",
+...             destCountry: {
+...                 $in: [
+...                     "Greece",
+...                     "Italy",
+...                     "Spain"
+...                 ]
+...             }
+...         }
+...     },
+...     {
+...         $group: {
+...             _id: "$carrier",
+...             total: {
+...                 $sum: "$passengers"
+...             }
+...         }
+...     },
+...     {
+...         $sort: {
+...             total: -1
+...         }
+...     },
+...     {
+...         $skip: 3
+...     },
+...     {
+...         $limit: 7
+...     }
+... ])
+{ "_id" : "Compagnia Aerea Italiana", "total" : 280256 }
+{ "_id" : "United Air Lines Inc.", "total" : 229936 }
+{ "_id" : "Emirates", "total" : 100903 }
+{ "_id" : "Air Europa", "total" : 94968 }
+{ "_id" : "Meridiana S.p.A", "total" : 20308 }
+{ "_id" : "Norwegian Air Shuttle ASA", "total" : 13344 }
+{ "_id" : "VistaJet Limited", "total" : 183 }
 
 > db.airlines.aggregate([
 ...     {
