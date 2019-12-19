@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 var apiNewsRouter = require('./routes/apiNewsRoutes');
+var mongoose = require('mongoose');
+var config = require('config');
 
 app.use("/news", apiNewsRouter);
 
