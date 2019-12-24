@@ -1,16 +1,54 @@
+const mongoose = require("mongoose");
+const News = require("../mongooseSheme/newsSheme");
+
 exports.getNews = (req, res, next) => {
-    res.send("All news endpoint");
+
+
+    News.find()
+        .exec()
+        .then(result => {
+            res.status(200).json(result);
+        })
+        .catch(error => {
+            next(error);
+        });
 }
 
 exports.getNewsById = (req, res, next) => { 
-    var err = new Error("No Found");
-    err.status = 404;
-    return next(err);   
-    res.send("Get news by id endpoint");
+    var id = req.params["id"];
+
+    News.findById()
+        .exec()
+        .then(result => {
+            if (result) {
+                res.status(200).json(result);
+            }
+            else{
+                res.status(404).send("NotFound");
+            }
+            
+        })
+        .catch(error => {
+            next(error);
+        });
 }
 
 exports.addNews = (req, res, next) => {
-    res.send("Create news endpoint");
+    var news = new News({
+        _id: mongoose.Types.ObjectId(),
+        author: req.body.author,
+        title: req.body.title,
+        url: req.body.url,
+        date: req.body.date,
+    })
+
+    news.save()
+        .then(result => {
+            res.status(201).json(result)
+        })
+        .catch(error => {
+            next(error);
+        });
 }
 
 exports.updateNews = (req, res, next) => {
