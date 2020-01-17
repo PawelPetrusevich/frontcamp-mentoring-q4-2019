@@ -1,8 +1,16 @@
 var express = require('express');
 var app = express();
 var apiNewsRouter = require('./routes/apiNewsRoutes');
+var userRouter = require('./routes/userRoutes');
 var mongoose = require('mongoose');
 var config = require('./config');
+var cors = require('cors');
+var passport = require('passport');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var session = require('express-session');
+
+app.use(cors());
 
 mongoose.connect(config.mongoConnectionString,{
     useNewUrlParser: true,
@@ -10,8 +18,15 @@ mongoose.connect(config.mongoConnectionString,{
 });
 
 app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser());
+app.use(session());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/news", apiNewsRouter);
+app.use("/user", userRouter);
 
 app.use(function(err, req, res, next) {
     res.send({

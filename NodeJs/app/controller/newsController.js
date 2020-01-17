@@ -15,9 +15,9 @@ exports.getNews = (req, res, next) => {
 }
 
 exports.getNewsById = (req, res, next) => { 
-    var id = req.params["id"];
+    var id = mongoose.Types.ObjectId( req.params["id"]);
 
-    News.findById()
+    News.findById(id)
         .exec()
         .then(result => {
             if (result) {
@@ -51,10 +51,27 @@ exports.addNews = (req, res, next) => {
         });
 }
 
-exports.updateNews = (req, res, next) => {
-    res.send("Update news endpoint");
+exports.updateNews = async (req, res, next) => {
+    try{
+        var newsId = mongoose.Types.ObjectId(req.params.id);
+        var news = await News.findById(newsId);
+        Object.entries(req.body).forEach(([key, value]) => {
+            news[key] = value;
+        });
+        await news.save();
+        res.status(201).json(news);
+    }
+    catch(err) {
+        next(err);
+    }    
 }
 
-exports.deleteNews = (req, res, next) => {
-    res.send("Delete news endpoint");
+exports.deleteNews = async (req, res, next) => {
+    try {
+        var newsId = mongoose.Types.ObjectId(req.params.id);
+        await News.findByIdAndDelete(newsId);
+        res.status(200);
+    } catch (error) {
+        next(err);
+    }
 }
