@@ -75,6 +75,12 @@ exports.register = async (req, res, next) => {
     }
 }
 
-exports.getUserInfo = (req, res, next) => {
-
+exports.getUserInfo = async (req, res, next) => {
+    try {
+        var userId = mongoose.Types.ObjectId(req.payload.id);
+        var user = await user.findById(userId);
+        return res.json({ user: user.toAuthJSON() });
+    } catch (err) {
+        return next(err);
+    }    
 }
